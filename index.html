@@ -323,11 +323,17 @@
                 <div class="mc-field-group size1of2">
                     <label for="mce-CLEANDATE-month">Preferred Cleaning Date</label>
                     <div class="datefield">
-                        <span class="subfield dayfield"><input class="datepart" type="text" placeholder="DD" size="2" maxlength="2" name="CLEANDATE[day]" id="mce-CLEANDATE-day"></span> /
-                        <span class="subfield monthfield"><input class="datepart" type="text" placeholder="MM" size="2" maxlength="2" name="CLEANDATE[month]" id="mce-CLEANDATE-month"></span> /
-                        <span class="subfield yearfield"><input class="datepart" type="text" placeholder="YYYY" size="4" maxlength="4" name="CLEANDATE[year]" id="mce-CLEANDATE-year"></span>
-                        <span class="small-meta nowrap">( dd / mm / yyyy )</span>
-                    </div>
+    <span class="subfield monthfield">
+        <input class="datepart" type="text" placeholder="MM" size="2" maxlength="2" name="month" id="month" pattern="\d{2}" required>
+    </span> /
+    <span class="subfield dayfield">
+        <input class="datepart" type="text" placeholder="DD" size="2" maxlength="2" name="day" id="day" pattern="\d{2}" required>
+    </span> /
+    <span class="subfield yearfield">
+        <input class="datepart" type="text" placeholder="YEAR" size="4" maxlength="4" name="year" id="year" pattern="\d{4}" required>
+    </span>
+</div>
+
                 </div>
                 <div class="mc-field-group">
                     <label for="mce-QUESTIONS">Questions or Special Request?</label>

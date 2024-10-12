@@ -799,4 +799,28 @@ footer {
         width: 100% !important; /* Ensure inputs take full width on mobile */
     }
 }
+}
+/* Align headers evenly on mobile */
+@media (max-width: 768px) {
+    /* Ensure the nav links align evenly */
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping */
+        justify-content: space-between; /* Distribute the links evenly */
+        padding: 0 10px; /* Add padding to avoid edges */
+    }
 
+    .nav-links li {
+        flex: 1 1 30%; /* Make each item take up 30% of the width */
+        text-align: center; /* Center the text within each link */
+        margin: 5px 0; /* Add some margin for spacing */
+    }
+
+    .nav-links a {
+        font-size: 16px; /* Slightly smaller font for mobile */
+    }
+
+    .nav-links li:not(:last-child)::after {
+        display: none; /* Remove the dividers on mobile */
+    }
+}

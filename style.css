@@ -1,0 +1,912 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Lato', sans-serif;
+    color: #000000; /* Default text color set to black */
+    background-color: #FFFFFF; /* White Background */
+}
+
+/* Header Styling */
+header {
+    text-align: center;
+    padding: 10px 5px;
+    background-color: #FFFFFF;
+}
+
+/* Logo Styling */
+.logo img {
+    width: 120px; /* Reduced size for mobile */
+    margin-bottom: 5px;
+}
+
+/* Navigation Menu */
+nav {
+    margin-top: 2px;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
+}
+
+.nav-links li {
+    margin: 0 15px; /* Reduced margin for better spacing on mobile */
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 18px; /* Slightly smaller font size for mobile */
+    font-weight: bold;
+    padding: 10px;
+    transition: color 0.75s ease;
+}
+
+.nav-links a:hover {
+    color: #0098eb;
+}
+
+.nav-links li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -15px; /* Adjusted for reduced margin */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 20px;
+    background-color: #000000;
+}
+
+/* Responsive Design for Navigation */
+@media (max-width: 768px) {
+    .nav-links {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+        gap: 10px;
+        justify-items: center; /* Ensure items are centered in each cell */
+    }
+
+    .nav-links li {
+        margin: 0;
+    }
+
+    .nav-links li:not(:last-child)::after {
+        display: none; /* Remove dividers on mobile */
+    }
+
+    .logo img {
+        width: 100px; /* Adjust logo size for mobile */
+    }
+}
+
+/* Divider Line */
+.divider {
+    width: 100%; /* Ensures the divider spans the full container */
+    height: 2px;
+    background-color: #000000;
+    margin: 15px 0;
+}
+
+/* Hero Section Styling */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full screen height */
+    overflow: hidden;
+}
+
+/* Hero Video Container */
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.hero-video-container iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 177.78vh; /* Aspect ratio of 16:9 (100 * 16 / 9 = 177.78) */
+    height: 100vh;
+    min-width: 100vw;
+    min-height: 56.25vw; /* Aspect ratio of 16:9 (100 * 9 / 16 = 56.25) */
+    transform: translate(-50%, -50%);
+    object-fit: cover; /* Ensures the video covers the whole screen */
+}
+
+/* Responsive Design for Hero Section */
+@media (max-width: 768px) {
+    .hero {
+        height: 100vh; /* Keep full height on mobile */
+    }
+
+    .hero-video-container iframe {
+        width: 177.78vh; /* Maintain aspect ratio */
+        height: 100vh; 
+        min-width: 100vw;
+        min-height: 56.25vw; /* Keep the video scaled to cover the mobile view */
+    }
+}
+
+
+/* Hero Content */
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    padding: 20px 30px; /* Adjusted padding */
+    width: fit-content; /* Auto width to fit the content exactly */
+    max-width: 600px; /* Optional: Limit max width to prevent it from being too wide */
+    border-radius: 8px;
+}
+
+.hero-content h1 {
+    font-size: 36px; /* Adjusted for a better fit */
+    color: #114538;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    color: #5e8d83;
+    margin-bottom: 20px;
+}
+
+.btn-quote {
+    display: inline-block;
+    background-color: #114538;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-quote:hover {
+    background-color: #5ea563;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 20px 15px; /* Adjusted padding for smaller screens */
+        max-width: 90%; /* Ensure it doesn’t exceed mobile screen width */
+    }
+
+    .hero-content h1 {
+        font-size: 28px; /* Slightly smaller font for mobile */
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+
+    .btn-quote {
+        font-size: 16px;
+    }
+}
+
+/* Info Section Styling */
+.info-section {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    z-index: 1;
+}
+
+.info-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Section Titles Styling */
+.info-container h2,
+.features-section h3 {
+    color: #114538; /* Original dark green color */
+    font-size: 32px; /* Keep the original size */
+    margin-bottom: 20px;
+}
+
+/* General Text Styling */
+.info-container p {
+    color: #5e8d83; /* Original lighter green text color */
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Features Section Styling */
+.features-section {
+    margin-top: 40px;
+    background-color: transparent; /* Remove green background */
+    padding: 40px 20px;
+    border-radius: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Features Grid Layout */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3x3 grid layout */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Feature Items (Individual Grid Boxes) */
+.feature {
+    padding: 20px;
+    background-color: #ffffff; /* Restore white background */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    color: #114538; /* Dark green text color */
+}
+
+/* Feature Icon Styling */
+.feature i {
+    font-size: 30px;
+    color: #5ea563; /* Restore icon color to green */
+    margin-bottom: 10px;
+}
+
+/* Feature Text */
+.feature p {
+    font-size: 16px;
+    color: #114538; /* Restore text color */
+}
+
+/* Hover Effect for Feature Items */
+.feature:hover {
+    background-color: #f0f0f0; /* Light grey on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design for Features */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns for tablets */
+    }
+}
+
+@media (max-width: 576px) {
+    .features-grid {
+        grid-template-columns: 1fr; /* Single column for mobile */
+    }
+
+    .side-images {
+        display: none; /* Hide side images on smaller screens */
+    }
+}
+
+/* Styling for Side Images */
+.side-images {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Reduced gap between the images */
+}
+
+.side-images.left {
+    left: 10px; /* Move the images closer to the text */
+}
+
+.side-images.right {
+    right: 10px; /* Move the images closer to the text */
+}
+
+.side-images img {
+    width: 350px; /* Set a common width */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Left Side Collage Effect (Reversed and Tilted More) */
+.side-images.left img:nth-child(1) {
+    transform: rotate(10deg) translateX(30px); /* Adjusted translateX for less space */
+    z-index: 2; /* Ensure it overlaps the second image */
+}
+
+.side-images.left img:nth-child(2) {
+    transform: rotate(-8deg) translateX(-30px); /* Adjusted translateX for less space */
+    margin-top: -50px; /* Overlap with the first image */
+    z-index: 1;
+}
+
+/* Right Side Collage Effect (Tilted More) */
+.side-images.right img:nth-child(1) {
+    transform: rotate(-10deg) translateX(30px); /* Adjusted translateX for less space */
+    z-index: 2; /* Ensure it overlaps the second image */
+}
+
+.side-images.right img:nth-child(2) {
+    transform: rotate(8deg) translateX(-30px); /* Adjusted translateX for less space */
+    margin-top: -50px; /* Overlap with the first image */
+    z-index: 1;
+}
+
+/* Optional Hover Effect */
+.side-images img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Info Section Styling */
+.info-section {
+    position: relative;
+    text-align: center;
+}
+
+.info-container {
+    max-width: 900px; /* Increased width to bring text closer to images */
+    margin: 0 auto;
+    padding: 0 10px; /* Reduced padding around the text */
+}
+
+/* Responsive Design for Info Section */
+@media (max-width: 1200px) {
+    .side-images img {
+        width: 300px; /* Adjust width for smaller screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .side-images img {
+        width: 250px; /* Adjust width for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .side-images {
+        display: none; /* Hide images on smaller screens */
+    }
+
+    .info-container {
+        padding: 0 15px;
+    }
+}
+
+
+/* Services Section Styling */
+.services-section {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+/* Title for Services Section */
+.section-title {
+    font-size: 36px;
+    color: #114538;
+    margin-bottom: 40px;
+}
+
+/* Services Grid Layout */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Service Panel Styling */
+.service-panel {
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    border-radius: 8px;
+    position: relative;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.service-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay to make text readable */
+    z-index: 1;
+    transition: background-color 0.3s ease;
+}
+
+.service-panel:hover::before {
+    background-color: rgba(0, 0, 0, 0.7); /* Darker overlay on hover */
+}
+
+.service-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.service-content h3 {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.service-content p {
+    font-size: 16px;
+    color: #d2e1cc;
+    margin-bottom: 15px;
+}
+
+.btn-quote {
+    font-size: 16px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #114538;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.btn-quote:hover {
+    background-color: #5ea563;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .services-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablet */
+    }
+}
+
+@media (max-width: 576px) {
+    .services-container {
+        grid-template-columns: 1fr; /* 1 column for mobile */
+    }
+}
+
+/* General styles for the 'Get a Quote' section */
+.quote-title-section {
+    background-color: #f9f9f9; /* Matches the info section background */
+    padding: 60px 20px; /* Similar padding as info section */
+    text-align: center;
+}
+
+.quote-title-content {
+    max-width: 1200px; /* Ensure consistent width with other sections */
+    margin: 0 auto; /* Center align the content */
+}
+
+.quote-title-content h1 {
+    font-size: 32px; /* Matches heading font size */
+    color: #114538; /* Same color as info section */
+    margin-bottom: 15px;
+}
+
+.quote-title-content p {
+    font-size: 18px; /* Matches paragraph font size */
+    color: #5e8d83; /* Same text color as info section */
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Form Section */
+.quote-form-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 24px;
+    color: #114538;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button.submit-btn {
+    background-color: #114538;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.submit-btn:hover {
+    background-color: #5ea563;
+}
+
+.radio-container {
+    display: flex;
+    justify-content: center; /* Center the radio buttons horizontally */
+    gap: 20px; /* Space between the radio buttons */
+    align-items: center; /* Align the radio buttons with the labels */
+    margin-top: 10px; /* Optional: Add some space above the radio buttons */
+}
+
+.radio-container label {
+    margin-left: 5px;
+}
+
+input[type="radio"] {
+    margin-right: 10px; /* Space between the radio button and label */
+}
+
+/* FAQ Section Styling */
+.faq-section {
+    padding: 80px 40px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 42px;
+    color: #114538;
+    margin-bottom: 50px;
+}
+
+.faq-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.faq-column {
+    flex: 1;
+    margin: 0 20px;
+}
+
+/* FAQ Item Styling */
+.faq-item {
+    margin-bottom: 25px;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 20px;
+}
+
+.faq-toggle {
+    display: none;
+}
+
+.faq-question {
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    color: #114538;
+    padding: 15px 0;
+    display: block;
+    word-break: break-word;
+    transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+    color: #5ea563;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    font-size: 20px;
+    color: #5e8d83;
+    transition: max-height 0.6s ease, padding 0.3s ease;
+    padding: 0 15px;
+    opacity: 0;
+    transition: max-height 0.6s ease, opacity 0.3s ease;
+}
+
+.faq-toggle:checked + .faq-question + .faq-answer {
+    max-height: 500px;
+    opacity: 1;
+    padding-top: 10px;
+}
+
+/* FAQ Section Mobile Styling */
+@media (max-width: 768px) {
+    .faq-container {
+        flex-direction: column;
+        width: 100%; /* Full width on mobile */
+    }
+
+    .faq-column {
+        margin: 0;
+        padding: 0;
+        width: 100%; /* Use full width */
+    }
+
+    .faq-item {
+        text-align: left;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        padding-left: 0; /* Remove padding */
+        padding-right: 0; /* Remove padding */
+    }
+
+    .faq-question {
+        font-size: 20px;
+        text-align: left;
+        padding: 10px; /* Use smaller padding */
+        width: 100%; /* Full width */
+    }
+
+    .faq-answer {
+        font-size: 18px;
+        line-height: 1.6;
+        word-break: normal;
+        width: 100%; /* Full width for answers */
+        padding: 10px 0; /* Padding adjusted */
+    }
+
+    /* Remove unnecessary padding around the FAQ container on mobile */
+    .faq-section {
+        padding: 20px;
+    }
+}
+
+/* Quote Form Section with Images */
+.quote-form-with-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* Keeps a decent gap between the form and the images */
+    margin-top: 20px;
+    position: relative;
+}
+
+/* Side Images Styling */
+.side-image {
+    position: relative;
+    width: 600px; /* Set the width to 3x larger */
+}
+
+/* Images Adjustments */
+.side-image img {
+    width: 100%; /* Ensure the image fits within the set width */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Left Tilted Image */
+.side-image.left img {
+    transform: rotate(-10deg) translateX(-100px); /* Tilt left and move further into the left margin */
+}
+
+/* Right Tilted Image */
+.side-image.right img {
+    transform: rotate(10deg) translateX(100px); /* Tilt right and move further into the right margin */
+}
+
+/* Hover Effect for Images */
+.side-image img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .quote-form-with-images {
+        flex-direction: column; /* Stack form and images on smaller screens */
+        align-items: center;
+    }
+
+    .side-image {
+        width: 300px; /* Adjust the width for mobile */
+    }
+
+    .side-image img {
+        transform: none; /* Remove tilt for mobile to avoid overflow */
+    }
+}
+/* Newsletter Signup Section */
+.newsletter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px; /* Add padding around the content */
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Ensure the Mailchimp Form is centered */
+#mc_embed_signup {
+    max-width: 400px; /* Limit the width for larger screens */
+    width: 100%; /* Ensure it takes full width on mobile */
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Adjust Input and Button Widths for the Form */
+#mc_embed_signup input[type="email"], #mc_embed_signup button {
+    width: 100%; /* Ensure inputs and buttons take full width */
+    margin: 0 auto; /* Center inputs and buttons */
+}
+
+/* Contact Info and Social Links Centering */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Center text */
+    padding: 20px 0; /* Add spacing around contact info */
+}
+
+.contact-info p {
+    margin: 5px 0;
+    text-align: center;
+    padding: 0;
+    width: 100%; /* Ensure full width for text */
+}
+
+/* Social Icons Centering */
+.social-icons {
+    display: flex;
+    justify-content: center; /* Center icons horizontally */
+    gap: 15px; /* Add space between icons */
+    margin-top: 10px;
+}
+
+.social-icons a {
+    font-size: 36px; /* Icon size */
+    color: #114538; /* Icon color */
+    display: inline-block;
+}
+
+.social-icons a:hover {
+    color: #5ea563;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .newsletter, .contact-info {
+        width: 100%; /* Full width on mobile */
+        margin: 0 auto; /* Ensure everything is centered */
+        padding: 0; /* Ensure no padding issues */
+    }
+
+    #mc_embed_signup {
+        max-width: 300px; /* Slightly reduce form size for mobile */
+        width: 100%; /* Ensure full width */
+        margin: 0 auto;
+    }
+
+    .social-icons {
+        justify-content: center; /* Center icons on mobile */
+    }
+
+    .contact-info p {
+        width: 100%; /* Ensure full width for text */
+    }
+}
+
+/* Footer Adjustments */
+footer {
+    width: 100%; /* Ensure full width */
+    padding: 0; /* Remove unnecessary padding */
+    text-align: center;
+}
+
+
+/* Hide left and right images in the Get a Quote section only on mobile */
+@media (max-width: 768px) {
+    .quote-form-with-images .side-image {
+        display: none;
+    }
+}
+/* Adjust Mailchimp form for mobile */
+@media (max-width: 768px) {
+    #mc_embed_signup {
+        width: 100% !important; /* Ensure the form takes the full width of the container */
+        padding: 0 15px !important; /* Add some padding on the sides */
+        box-sizing: border-box; /* Ensure padding doesn't affect the width */
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
+    .quote-form-with-images {
+        padding: 0; /* Remove any extra padding around the form */
+    }
+
+    /* Adjust the input fields for mobile */
+    #mc_embed_signup input {
+        width: 100% !important; /* Ensure inputs take full width on mobile */
+    }
+}
+/* Align headers evenly on mobile */
+@media (max-width: 768px) {
+    /* Ensure the nav links align evenly */
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping */
+        justify-content: space-between; /* Distribute the links evenly */
+        padding: 0 10px; /* Add padding to avoid edges */
+    }
+
+    .nav-links li {
+        flex: 1 1 30%; /* Make each item take up 30% of the width */
+        text-align: center; /* Center the text within each link */
+        margin: 5px 0; /* Add some margin for spacing */
+    }
+
+    .nav-links a {
+        font-size: 16px; /* Slightly smaller font for mobile */
+    }
+
+    .nav-links li:not(:last-child)::after {
+        display: none; /* Remove the dividers on mobile */
+    }
+}

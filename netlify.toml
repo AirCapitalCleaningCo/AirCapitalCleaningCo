@@ -1,8 +1,9 @@
-[build]
-  publish = "/"
-  command = ""
+[[redirects]]
+from = "/blog/admin"
+to = "/blog/admin/index.html"
+status = 200
 
 [[redirects]]
-  from = "/blog/admin"
-  to = "/blog/admin/index.html#/"
-  status = 200
+from = "/blog/admin/"
+to = "/blog/admin/index.html"
+status = 200

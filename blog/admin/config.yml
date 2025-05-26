@@ -1,6 +1,10 @@
+site_url: https://aircapitalcleaning.com
+
 backend:
   name: git-gateway
   branch: main
+  identity_url: https://aircapitalcleaning.com/.netlify/identity
+  api_root: https://aircapitalcleaning.com/.netlify/git
 
 media_folder: "static/images/uploads" # Where images are uploaded
 public_folder: "/images/uploads"

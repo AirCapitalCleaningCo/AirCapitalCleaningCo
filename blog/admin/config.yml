@@ -2,8 +2,10 @@ site_url: https://aircapitalcleaning.com
 
 backend:
   name: github
-  repo: AirCapitalCleaningCo/AirCapitalCleaningCo  # Your repo
+  repo: AirCapitalCleaningCo/AirCapitalCleaningCo
   branch: main
+  base_url: https://api.netlify.com
+  site_id: 75d3af84-8629-4e74-8a4f-fb0285559f15
 
 media_folder: "static/images/uploads"
 public_folder: "/images/uploads"

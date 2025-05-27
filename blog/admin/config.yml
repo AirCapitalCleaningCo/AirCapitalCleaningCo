@@ -1,9 +1,9 @@
 site_url: https://aircapitalcleaning.com
 
 backend:
-  name: git-gateway
+  name: github
+  repo: AirCapitalCleaningCo/AirCapitalCleaningCo  # Your repo
   branch: main
-  site_id: 75d3af84-8629-4e74-8a4f-fb028555f915
 
 media_folder: "static/images/uploads"
 public_folder: "/images/uploads"

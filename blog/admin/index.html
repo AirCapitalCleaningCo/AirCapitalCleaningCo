@@ -2,14 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <title>CMS | Air Capital Cleaning Co.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Air Capital Cleaning Co. | Admin</title>
-    <link rel="stylesheet" href="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.css" />
+    <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
   </head>
   <body>
-    <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
     <script>
-      CMS.init();
+      window.CMS_MANUAL_INIT = true;
+      window.addEventListener('load', () => {
+        CMS.init();
+      });
     </script>
     <div id="nc-root"></div>
   </body>

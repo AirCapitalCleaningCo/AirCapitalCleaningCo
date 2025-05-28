@@ -2,17 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Blog | Air Capital Cleaning Co.</title>
-  <link rel="stylesheet" href="../style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="container" style="padding: 60px 20px; max-width: 1000px; margin: auto;">
-    <h1 style="font-size: 36px; font-family: 'Lato', sans-serif; font-weight: bold; color: #114538;">
-      Our Latest <span style="color:#5ea563;">Blogs</span>
-    </h1>
-    <p style="color:#5e8d83;">New posts coming soon. This page will automatically update when you start posting using Netlify CMS.</p>
-  </div>
+  <header style="text-align: center; padding: 40px 20px;">
+    <h1 style="font-size: 36px; font-family: 'Lato', sans-serif;">Our Cleaning Blog</h1>
+    <p style="font-size: 16px; color: #5e8d83;">Tips, updates, and stories from the Air Capital crew</p>
+  </header>
+
+  <main id="blog-posts" style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
+    <!-- Posts will be injected here -->
+  </main>
+
+  <script>
+    async function loadPosts() {
+      const res = await fetch('/blog/index.json'); // This assumes your posts are being compiled to /blog/index.json
+      const posts = await res.json();
+
+      const container = document.getElementById('blog-posts');
+      posts.forEach(post => {
+        const el = document.createElement('article');
+        el.style.marginBottom = '40px';
+        el.innerHTML = `
+          <h2><a href="/blog/${post.slug}/" style="color: #114538;">${post.title}</a></h2>
+          <p style="color: #444;">${post.summary || ''}</p>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    loadPosts();
+  </script>
 </body>
 </html>

@@ -4,74 +4,88 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog | Air Capital Cleaning Co.</title>
-  <link rel="stylesheet" href="../style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
   <style>
     body {
       font-family: 'Lato', sans-serif;
+      margin: 0;
       padding: 40px;
-      background-color: #f9f9f9;
+      background-color: #f8f9fa;
     }
-    .post {
-      background: white;
-      padding: 25px;
+    header {
+      text-align: center;
       margin-bottom: 40px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-    .post h2 {
-      margin-top: 0;
+    h1 {
+      font-size: 36px;
       color: #114538;
     }
-    .post time {
-      font-size: 0.9em;
-      color: #888;
+    p {
+      color: #555;
+    }
+    article {
+      background: white;
+      padding: 30px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    article h1, article h2, article h3 {
+      color: #114538;
     }
   </style>
 </head>
 <body>
-  <h1 style="color:#114538;">🧽 Blog Posts by Air Capital Cleaning Co.</h1>
-  <div id="posts">Loading blog posts...</div>
+  <header>
+    <h1>Our Blog</h1>
+    <p>Insights, cleaning tips, and company news from Air Capital Cleaning Co.</p>
+  </header>
+  
+  <main id="blog-posts"></main>
 
-  <!-- Load marked.js for Markdown rendering -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    async function loadPosts() {
-      const postList = ['test.md']; // Later, automate this list
-      const container = document.getElementById('posts');
-      container.innerHTML = '';
+    async function fetchBlogPosts() {
+      const container = document.getElementById('blog-posts');
+      const converter = new showdown.Converter();
 
-      for (let filename of postList) {
-        const res = await fetch(`./posts/${filename}`);
+      try {
+        // Attempt to get .md filenames from directory listing (works only if enabled)
+        const res = await fetch('./posts/');
         const text = await res.text();
+        const matches = [...text.matchAll(/href="([^?][^"]+\.md)"/g)];
+        const postNames = matches.map(match => match[1]);
 
-        const frontmatterMatch = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/m.exec(text);
-        let metadata = {};
-        let content = text;
+        if (postNames.length === 0) throw new Error("No posts found or directory listing blocked.");
 
-        if (frontmatterMatch) {
-          frontmatterMatch[1].split('\n').forEach(line => {
-            const [key, ...rest] = line.split(':');
-            metadata[key.trim()] = rest.join(':').trim();
-          });
-          content = frontmatterMatch[2];
+        for (let name of postNames.reverse()) {
+          const postRes = await fetch(`./posts/${name}`);
+          const markdown = await postRes.text();
+          const html = converter.makeHtml(markdown);
+
+          const article = document.createElement('article');
+          article.innerHTML = html;
+          container.appendChild(article);
         }
 
-        const html = marked.parse(content);
-        const date = metadata.date || 'Unknown date';
-        const title = metadata.title || filename.replace('.md', '');
-
-        container.innerHTML += `
-          <div class="post">
-            <h2>${title}</h2>
-            <time>${date}</time>
-            <div>${html}</div>
-          </div>
+      } catch (e) {
+        console.warn("Automatic blog post loading failed. Directory listing may be disabled.");
+        container.innerHTML = `
+          <p style="color:#c00;">⚠️ Could not automatically load blog posts. 
+          You may need to manually list filenames in the HTML or enable directory listing.</p>
+          <p>To manually add posts, edit the script and define a <code>postNames</code> array like:</p>
+          <pre>
+const postNames = [
+  '2024-06-01-first-post.md',
+  '2024-06-03-cleaning-hacks.md'
+];
+          </pre>
         `;
       }
     }
 
-    loadPosts();
+    fetchBlogPosts();
   </script>
 </body>
 </html>

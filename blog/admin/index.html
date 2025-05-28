@@ -7,13 +7,29 @@
     <link rel="stylesheet" href="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.css" />
   </head>
   <body>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+
     <script>
       window.CMS_MANUAL_INIT = true;
       window.addEventListener('load', () => {
+        const identity = window.netlifyIdentity;
+
+        if (identity) {
+          identity.on('init', user => {
+            if (!user) {
+              identity.on('login', () => {
+                document.location.href = '/blog/admin/';
+              });
+            }
+          });
+          identity.init();
+        }
+
         CMS.init();
       });
     </script>
+
     <div id="nc-root"></div>
   </body>
 </html>

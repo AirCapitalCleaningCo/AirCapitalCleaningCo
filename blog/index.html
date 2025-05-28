@@ -4,40 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog | Air Capital Cleaning Co.</title>
-  <link rel="stylesheet" href="../style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Lato', sans-serif;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+    .post {
+      background: white;
+      padding: 25px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .post h2 {
+      margin-top: 0;
+      color: #114538;
+    }
+    .post time {
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Our Blog</h1>
-    <p>Insights, cleaning tips, and company news from Air Capital Cleaning Co.</p>
-  </header>
-  
-  <main id="blog-posts"></main>
+  <h1 style="color:#114538;">🧽 Blog Posts by Air Capital Cleaning Co.</h1>
+  <div id="posts">Loading blog posts...</div>
 
+  <!-- Load marked.js for Markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    async function fetchBlogPosts() {
-      const postNames = [
-        // Add .md filenames Netlify CMS will generate here manually for now
-        '2024-06-01-first-post.md',
-        '2024-06-03-cleaning-hacks.md'
-      ];
+    async function loadPosts() {
+      const postList = ['test.md']; // Later, automate this list
+      const container = document.getElementById('posts');
+      container.innerHTML = '';
 
-      const container = document.getElementById('blog-posts');
-      const converter = new showdown.Converter();
+      for (let filename of postList) {
+        const res = await fetch(`./posts/${filename}`);
+        const text = await res.text();
 
-      for (let name of postNames) {
-        const res = await fetch(`./posts/${name}`);
-        const markdown = await res.text();
-        const html = converter.makeHtml(markdown);
+        const frontmatterMatch = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/m.exec(text);
+        let metadata = {};
+        let content = text;
 
-        const article = document.createElement('article');
-        article.innerHTML = html;
-        container.appendChild(article);
+        if (frontmatterMatch) {
+          frontmatterMatch[1].split('\n').forEach(line => {
+            const [key, ...rest] = line.split(':');
+            metadata[key.trim()] = rest.join(':').trim();
+          });
+          content = frontmatterMatch[2];
+        }
+
+        const html = marked.parse(content);
+        const date = metadata.date || 'Unknown date';
+        const title = metadata.title || filename.replace('.md', '');
+
+        container.innerHTML += `
+          <div class="post">
+            <h2>${title}</h2>
+            <time>${date}</time>
+            <div>${html}</div>
+          </div>
+        `;
       }
     }
 
-    fetchBlogPosts();
+    loadPosts();
   </script>
 </body>
 </html>

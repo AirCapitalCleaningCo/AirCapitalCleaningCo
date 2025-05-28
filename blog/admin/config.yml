@@ -1,7 +1,8 @@
 site_url: https://aircapitalcleaning.com
 
 backend:
-  name: git-gateway
+  name: github
+  repo: AirCapitalCleaningCo/AirCapitalCleaningCo  # Replace with your GitHub username/repo
   branch: main
 
 media_folder: "static/images/uploads"
@@ -14,6 +15,6 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }

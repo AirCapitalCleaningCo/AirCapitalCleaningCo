@@ -5,6 +5,7 @@ backend:
   repo: AirCapitalCleaningCo/AirCapitalCleaningCo
   branch: main
   base_url: https://api.netlify.com
+  auth_endpoint: auth
   site_id: 75d3af84-8629-4e74-8a4f-fb0285559f15
 
 media_folder: "static/images/uploads"

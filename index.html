@@ -118,6 +118,11 @@ details p{color:var(--mut);margin:14px 0 0;max-width:620px}
 .stub small{display:block;letter-spacing:.2em;color:var(--sky2);font-size:11px;text-transform:uppercase}
 .stub strong{font:800 40px 'Barlow Condensed';letter-spacing:.04em}
 .ok{display:none;grid-column:1/-1;text-align:center;padding:40px 0}.ok h3{font-size:48px;color:var(--sky)}
+/* Center the submitted boarding-pass message in the light panel. */
+.pass form.quote-submitted{display:flex;align-items:center;justify-content:center;min-height:400px;text-align:center}
+.pass form.quote-submitted .ok{width:100%;max-width:660px;margin:auto;padding:28px 12px}
+.pass form.quote-submitted .ok h3{line-height:1.08;margin:0 0 20px}
+.pass form.quote-submitted .ok p{font-size:17px;line-height:1.7;margin:0 auto;max-width:600px}
 /* footer */
 footer{border-top:1px solid var(--line);padding:60px 0 40px;background:#0a141e}
 footer .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:center}
@@ -196,7 +201,7 @@ footer p{color:var(--mut);font-size:14px;margin:6px 0}
 <div class="radar rev"><b></b><span>ICT</span></div></div></section>
 
 <section class="quote" id="quote"><div class="wrap">
-<div class="rev" style="text-align:center"><div class="eyebrow" style="justify-content:center">Boarding pass</div><h2>Get your free quote</h2><p class="lead" style="margin:auto">Complete the form and a quote will be emailed to you within 2 business days.</p></div>
+<div class="rev" style="text-align:center"><div class="eyebrow" style="justify-content:center">Boarding pass</div><h2>Get your free quote</h2><p class="lead" style="margin:auto">Tell us about your cleaning needs, and our crew will be in touch to discuss the next steps.</p></div>
 <div class="pass rev">
 <form id="qf" novalidate>
 <div><label>First name *</label><input name="FNAME" autocomplete="given-name" required></div><div><label>Last name *</label><input name="LNAME" autocomplete="family-name" required></div>
@@ -210,7 +215,7 @@ footer p{color:var(--mut);font-size:14px;margin:6px 0}
 <div><label>Square feet</label><input type="number" name="SQFT" inputmode="numeric"></div><div><label>Method of entry</label><select name="ENTRY"><option value=""></option><option>Door Code</option><option>Key</option><option>Someone Home</option></select></div>
 <div class="full"><label>Questions or special requests</label><textarea name="QUESTIONS" rows="3"></textarea></div>
 <div class="full"><div id="lead-turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAAFsIvro4xB_iKqGj" data-size="invisible" data-execution="execute" data-callback="accTurnstileVerified" data-error-callback="accTurnstileError" data-expired-callback="accTurnstileError"></div><p id="lead-error" role="alert" style="display:none;color:#ffb4a9;margin:8px 0"></p><button class="btn" id="lead-submit" type="submit">Submit quote request &rarr;</button></div>
-<div class="ok" id="ok"><h3>You’re cleared for takeoff</h3><p>Thanks! Your quote request has been received. I'll review the details and follow up with you soon.</p></div>
+<div class="ok" id="ok"><h3>You’re cleared for takeoff</h3><p>Thanks for checking in! Your quote request has landed safely with our crew. We’ll review the details and be in touch soon to plan the next steps.</p></div>
 </form>
 <div class="stub"><img data-l alt=""><div><small>Flight</small><strong>ACC 316</strong></div><div><small>From</small><strong>Dirty</strong><small style="margin-top:10px">To</small><strong>Spotless</strong></div></div>
 </div></div></section>
@@ -284,6 +289,7 @@ window.accTurnstileVerified=async function(token){
     [].slice.call(form.children).forEach(function(child){
       if(!child.classList.contains("ok"))child.style.display="none";
     });
+    form.classList.add("quote-submitted");
     document.getElementById("ok").style.display="block";
     document.getElementById("ok").setAttribute("role","status");
     document.getElementById("ok").setAttribute("aria-live","polite");
@@ -297,6 +303,11 @@ form.addEventListener("submit",function(event){
   event.preventDefault();
   if(verified)return;
   if(busy)return;
+  // Native required-field checks before invoking invisible Turnstile.
+  if(!form.checkValidity()){
+    form.reportValidity();
+    return;
+  }
   busy=true;button.disabled=true;error.style.display="none";
   if(!window.turnstile){showError("Security verification is loading. Please try again.");return;}
   try{window.turnstile.execute("#lead-turnstile");}

@@ -198,7 +198,7 @@ footer p{color:var(--mut);font-size:14px;margin:6px 0}
 <section class="quote" id="quote"><div class="wrap">
 <div class="rev" style="text-align:center"><div class="eyebrow" style="justify-content:center">Boarding pass</div><h2>Get your free quote</h2><p class="lead" style="margin:auto">Complete the form and a quote will be emailed to you within 2 business days.</p></div>
 <div class="pass rev">
-<form id="qf" action="https://aircapitalcleaning.us10.list-manage.com/subscribe/post?u=8a05acbbfc5948621e1af3637&amp;id=9b1b05ba3a&amp;f_id=00f994e3f0" method="post" target="_blank" name="mc-embedded-subscribe-form">
+<form id="qf" novalidate>
 <div><label>First name *</label><input name="FNAME" autocomplete="given-name" required></div><div><label>Last name *</label><input name="LNAME" autocomplete="family-name" required></div>
 <div><label>Email *</label><input type="email" name="EMAIL" autocomplete="email" required></div><div><label>Phone</label><input type="tel" name="PHONE" autocomplete="tel"></div>
 <div class="full"><label>Company</label><input name="COMPANY" autocomplete="organization"></div>
@@ -209,8 +209,7 @@ footer p{color:var(--mut);font-size:14px;margin:6px 0}
 <div><label>Frequency *</label><select name="FREQUENCY" required><option value="">Select</option><option>Weekly</option><option>Bi-Weekly</option><option>Monthly</option></select></div>
 <div><label>Square feet</label><input type="number" name="SQFT" inputmode="numeric"></div><div><label>Method of entry</label><select name="ENTRY"><option value=""></option><option>Door Code</option><option>Key</option><option>Someone Home</option></select></div>
 <div class="full"><label>Questions or special requests</label><textarea name="QUESTIONS" rows="3"></textarea></div>
-<div aria-hidden="true" style="position:absolute;left:-5000px"><input type="text" name="b_8a05acbbfc5948621e1af3637_9b1b05ba3a" tabindex="-1" value=""></div>
-<div class="full"><div id="lead-turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAAFsCe-luz82HZzOz" data-size="normal" data-execution="execute" data-callback="accTurnstileVerified" data-error-callback="accTurnstileError" data-expired-callback="accTurnstileError"></div><p id="lead-error" role="alert" style="display:none;color:#ffb4a9;margin:8px 0"></p><button class="btn" id="lead-submit" type="submit" name="subscribe">Submit quote request &rarr;</button></div>
+<div class="full"><div id="lead-turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAAFsCe-luz82HZzOz" data-size="normal" data-execution="execute" data-callback="accTurnstileVerified" data-error-callback="accTurnstileError" data-expired-callback="accTurnstileError"></div><p id="lead-error" role="alert" style="display:none;color:#ffb4a9;margin:8px 0"></p><button class="btn" id="lead-submit" type="submit">Submit quote request &rarr;</button></div>
 <div class="ok" id="ok"><h3>You’re cleared for takeoff</h3><p>Thanks! Your request was sent and your quote will be emailed within 2 business days. A confirmation page may open in a new tab, and you can close it.</p></div>
 </form>
 <div class="stub"><img data-l alt=""><div><small>Flight</small><strong>ACC 316</strong></div><div><small>From</small><strong>Dirty</strong><small style="margin-top:10px">To</small><strong>Spotless</strong></div></div>
@@ -252,7 +251,7 @@ function go(){cancelAnimationFrame(raf);build();trail=[];t0=0;bank=0;var a=ev(0)
 rp.onclick=function(){scrollTo({top:0});setTimeout(go,350)};
 addEventListener("load",function(){setTimeout(go,900)});})();
 var lk=document.getElementById("lk");document.getElementById("bg").onclick=function(){lk.classList.toggle("o")};lk.querySelectorAll("a").forEach(function(a){a.onclick=function(){lk.classList.remove("o")}});
-// Quote-form test integration: verify with Cloudflare, then retain native Mailchimp POST.
+// Quote-form test integration: Cloudflare verifies the visitor; the Worker saves the lead. No Mailchimp POST or hosted redirect.
 (function(){
 var form=document.getElementById("qf"), button=document.getElementById("lead-submit");
 var error=document.getElementById("lead-error"), verified=false, busy=false;
@@ -280,18 +279,23 @@ window.accTurnstileVerified=async function(token){
     });
     if(!response.ok)throw new Error("Lead verification failed");
     verified=true;
-    form.requestSubmit(button);
+    // The Worker has accepted and queued the lead. Show the branded success state
+    // directly on this page; do not submit to Mailchimp or open another tab.
+    [].slice.call(form.children).forEach(function(child){
+      if(!child.classList.contains("ok"))child.style.display="none";
+    });
+    document.getElementById("ok").style.display="block";
+    document.getElementById("ok").setAttribute("role","status");
+    document.getElementById("ok").setAttribute("aria-live","polite");
+    document.getElementById("ok").scrollIntoView({behavior:"smooth",block:"center"});
   }catch(e){
     if(window.turnstile)window.turnstile.reset("#lead-turnstile");
     showError("We couldn't verify your request. Please try again or call (316) 350-5252.");
   }
 };
 form.addEventListener("submit",function(event){
-  if(verified){
-    setTimeout(function(){[].slice.call(form.children).forEach(function(c){c.style.display="none"});document.getElementById("ok").style.display="block"},400);
-    return;
-  }
   event.preventDefault();
+  if(verified)return;
   if(busy)return;
   busy=true;button.disabled=true;error.style.display="none";
   if(!window.turnstile){showError("Security verification is loading. Please try again.");return;}
